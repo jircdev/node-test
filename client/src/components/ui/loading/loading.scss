@@ -1,0 +1,8 @@
+.--layout-content__spinner {
+  height: 100% !important;
+  width: 100% !important;
+  position: fixed !important;
+  top: calc(50vh - 32px) !important;
+  left: calc(50vw - 32px) !important;
+  z-index: 1000000;
+}

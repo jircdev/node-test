@@ -1,3 +1,7 @@
-node_modules
-.vscode
-.idea
+api/.env
+node_modules/
+dist/
+api/uploads/
+.gitignore
+.DS_Store/
+._.DS_Store/

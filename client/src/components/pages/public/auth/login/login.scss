@@ -1,0 +1,47 @@
+@import '../../../../../assets/css/partials/variables.scss';
+
+.--login-page__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  height: -moz-available; /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  height: stretch;
+}
+
+.--login-form__container {
+  background-color: $white;
+  border: 1px solid $primary;
+  border-radius: 5px;
+  padding: 24px;
+  width: 100%;
+  max-width: 275px;
+}
+
+.--login-form__title {
+  text-align: center;
+}
+
+.login-form-button {
+  width: 100%;
+  margin-right: 1em !important;
+}
+
+.--register-goto__text {
+  color: $primary;
+  display: block;
+  margin-top: 0.5em;
+  text-align: center;
+}
+
+.--register-goto__link {
+  margin-left: 12px !important;
+}
+
+.--login-form__forgot {
+  color: $secondary !important;
+  display: block;
+  text-align: center;
+  width: 100%;
+}
