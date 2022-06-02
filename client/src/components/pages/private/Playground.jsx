@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getImages } from '../../../actions/upload';
-import { UploadForm } from '../../forms/upload/Upload';
+import { UploadForm } from '../../ui/upload/Upload';
 import { CardGrid } from '../../ui/card/CardGrid';
 
 export const ImagesContext = createContext(null);
@@ -16,7 +16,9 @@ export const Playground = () => {
     const fetchData = async () => {
       const result = await dispatch(getImages());
 
-      const sortResult = result.sort((a, b) =>
+      console.log(result);
+
+      const sortResult = result?.sort((a, b) =>
         a.image.toLowerCase() < b.image.toLowerCase() ? -1 : b.image.toLowerCase() > a.image.toLowerCase() ? 1 : 0
       );
 
