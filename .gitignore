@@ -1,7 +1,7 @@
-api/.env
+.env/
 node_modules/
 dist/
 api/uploads/
-.gitignore
+.gitignore/
 .DS_Store/
 ._.DS_Store/

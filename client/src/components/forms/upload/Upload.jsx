@@ -44,6 +44,7 @@ export const UploadForm = () => {
 			setFileList(newFileList);
 		},
 		beforeUpload: (file) => {
+			console.log(file);
 			setFileList([...fileList, file]);
 			return false;
 		},

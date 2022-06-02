@@ -23,7 +23,6 @@ export const uploadImage = async (req: Req, res: Resp) => {
 
 export const getImage = async (req: Req, res: Resp) => {
 	const { img, userId } = req.params;
-	console.log({ img, userId });
 	const url = path.join(__dirname, `../../uploads/images/${userId}/${img}`);
 	res.sendFile(url);
 };
@@ -31,9 +30,9 @@ export const getImage = async (req: Req, res: Resp) => {
 export const getImages = async (req: Req, res: Resp) => {
 	const token = req.headers["x-token"];
 	const { uid } = parseJwt(token);
-	const data: string[][] = await searchImages(`uploads/images/${uid}/**/*`);
+	const data: string[][] = await searchImages(`uploads/images/**/*`);
 
-	imagesPopulate(data)
+	imagesPopulate(data, uid)
 		.then((result) => {
 			res.status(200).json({
 				ok: true,
@@ -46,7 +45,7 @@ export const getImages = async (req: Req, res: Resp) => {
 		});
 };
 
-const imagesPopulate = (data: string[][]) => {
+const imagesPopulate = (data: string[][], uid: string) => {
 	return new Promise((resolve, reject) => {
 		const result: imgData[] = [];
 		try {
@@ -56,8 +55,9 @@ const imagesPopulate = (data: string[][]) => {
 					const user = await User.findById(userId);
 					const name = String(user?.name);
 
-					result.push({ id: uuidv4(), name, userId, image });
-					console.log({ i, len: array.length - 1 });
+					if (uid === userId) {
+						result.push({ id: uuidv4(), name, userId, image });
+					}
 					if (i === array.length - 1) {
 						resolve(result);
 					}
@@ -90,17 +90,9 @@ const searchImages = (pattern: string): Promise<string[][]> => {
 
 export const deleteImage = async (req: Req, res: Resp) => {
 	const { img, userId } = req.params;
-	emailer({
-		from: '"Fred Foo 👻" <foo@example.com>', // sender address
-		to: "bar@example.com, baz@example.com", // list of receivers
-		subject: "Hello ✔", // Subject line
-		text: "Hello world?", // plain text body
-		html: "<b>Enviado cuando se borra</b>", // html body
-	}).catch(console.error);
 
 	fs.unlink(path.join(__dirname, `../../uploads/images/${userId}/${img}`))
 		.then(() => {
-			console.log(`File deleted: ${img}`);
 			res.status(200).json({
 				ok: true,
 				msg: "Successfully image delete",
