@@ -7,6 +7,7 @@ import './upload.scss';
 import history from '../../../helpers/history';
 
 const url = `${process.env.REACT_APP_API_URL}/uploads/`;
+const { Dragger } = Upload;
 
 const deafaultFileList = [
   {
@@ -15,11 +16,6 @@ const deafaultFileList = [
     status: 'done',
     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  },
-  {
-    uid: '-2',
-    name: 'yyy.png',
-    status: 'error',
   },
 ];
 
@@ -68,12 +64,19 @@ export const UploadForm = () => {
   return (
     <div className='form-container'>
       <Space align='center' direction='vertical'>
-        <Upload listType='picture' accept='.png, .jpg, .jpeg' defaultFileList={[...deafaultFileList]} {...props}>
+        <Dragger
+          className='dragger=====>'
+          listType='picture'
+          accept='.png, .jpg, .jpeg'
+          defaultFileList={[deafaultFileList]}
+          {...props}
+          style={{ padding: '24px' }}
+        >
           <p className='ant-upload-drag-icon'>
             <InboxOutlined />
           </p>
           <p className='ant-upload-text'>Haga click o arrastre una imagen a esta area para subirla</p>
-        </Upload>
+        </Dragger>
 
         <Button
           type='primary'

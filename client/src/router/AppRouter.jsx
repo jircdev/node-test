@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { routes2 } from './routes';
+import { userRoutes } from './routes';
 import { NotFound } from '../components/pages';
-//import { role } from '../layouts/AppHeader';
 
 export const AppRouter = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [routes, setRoutes] = useState([]);
+  let completeRouted = false;
 
   useEffect(() => {
-    setRoutes(routes2(isLoggedIn));
+    setRoutes(userRoutes(isLoggedIn));
   }, [isLoggedIn]);
 
   return (
     <Switch>
-      {routes.map((route) => {
+      {routes.map((route, i) => {
+        if (routes.length - 1 === i) {
+          completeRouted = true;
+        }
         if (route.scope === 'menu') {
           if (route.redirect) {
             return <Redirect key={route.key} to={route.pathTo} />;
@@ -35,7 +38,7 @@ export const AppRouter = () => {
           );
         }
       })}
-      <Route component={NotFound} />;
+      {completeRouted && <Route component={NotFound} />};
     </Switch>
   );
 };

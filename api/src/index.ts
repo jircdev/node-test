@@ -25,7 +25,6 @@ app.use('/api/uploads', uploadRouter);
 app.use('/api/email', emailRouter);
 app.use(dbConnectionSatus);
 app.use('/api/auth', userRouter);
-app.use('/', () => 'index.html');
 
 const port = process.env.PORT;
 

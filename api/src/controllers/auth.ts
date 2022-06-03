@@ -1,110 +1,128 @@
-import { Request, Response, NextFunction } from "express";
-import bcrypt from "bcryptjs";
-import { User } from "../models/User";
-import { generateJWT } from "../helper/jwt";
+import { Request, Response, NextFunction } from 'express';
+import bcrypt from 'bcryptjs';
+import { User } from '../models/User';
+import { generateJWT } from '../helper/jwt';
 
 export const getUsers = async (req: Request, res: Response) => {
-	res.status(200).json({
-		ok: true,
-		uid: "hghghhffd",
-		name: "joalrope",
-		token: "token valido",
-	});
+  res.status(200).json({
+    ok: true,
+    uid: 'hghghhffd',
+    name: 'joalrope',
+    token: 'token valido',
+  });
 };
 
 export const createUser = async (req: Request, res: Response) => {
-	const { email, password } = req.body;
+  const { email, password } = req.body;
 
-	try {
-		let user = await User.findOne({ email });
+  try {
+    let user = await User.findOne({ email });
 
-		if (user) {
-			return res.status(200).json({
-				ok: false,
-				msg: `Ya existe un usuario con el correo ${email}`,
-			});
-		} else {
-			user = new User(req.body);
+    if (user) {
+      return res.status(200).json({
+        ok: false,
+        msg: `Ya existe un usuario con el correo ${email}`,
+      });
+    } else {
+      user = new User(req.body);
 
-			//Encriptar contraseña
-			const salt = bcrypt.genSaltSync();
+      //Encriptar contraseña
+      const salt = bcrypt.genSaltSync();
 
-			user.password = bcrypt.hashSync(password, salt);
+      user.password = bcrypt.hashSync(password, salt);
 
-			await user.save();
+      await user.save();
 
-			// Generar JWT (Json Web Token)
-			const token = await generateJWT(user.id, user.name, "user");
+      // Generar JWT (Json Web Token)
+      const token = await generateJWT(user.id, user.name, 'user');
 
-			res.status(201).json({
-				ok: true,
-				uid: user.id,
-				name: user.name,
-				role: "user",
-				token,
-			});
-		}
-	} catch (error) {
-		res.status(500).json({
-			ok: false,
-			msg: "Por favor hable con el administrador",
-		});
-	}
+      res.status(201).json({
+        ok: true,
+        uid: user.id,
+        name: user.name,
+        role: 'user',
+        token,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      msg: 'Por favor hable con el administrador',
+    });
+  }
 };
 
 export const userLogin = async (req: Request, res: Response) => {
-	const { email, password } = req.body;
-	try {
-		const user = await User.findOne({ email });
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
 
-		// Verificar si existe el usuario
-		if (!user) {
-			return res.status(200).json({
-				ok: false,
-				msg: `El usuario y/o contraseña no son correctos`,
-			});
-		}
+    // Verificar si existe el usuario
+    if (!user) {
+      return res.status(200).json({
+        ok: false,
+        msg: `El usuario y/o contraseña no son correctos`,
+      });
+    }
 
-		// Confirmar match del password enviado
-		const validPassword = bcrypt.compareSync(password, user.password);
+    // Confirmar match del password enviado
+    const validPassword = bcrypt.compareSync(password, user.password);
 
-		if (!validPassword) {
-			return res.status(200).json({
-				ok: false,
-				msg: "El usuario y/o contraseña no son correctos",
-			});
-		}
+    if (!validPassword) {
+      return res.status(200).json({
+        ok: false,
+        msg: 'El usuario y/o contraseña no son correctos',
+      });
+    }
 
-		//Generar JWT (Json Web Token)
-		const token = await generateJWT(user.id, user.name, user.role);
+    //Generar JWT (Json Web Token)
+    const token = await generateJWT(user.id, user.name, user.role);
 
-		res.status(201).json({
-			ok: true,
-			msg: "Inicio de sesión exitoso",
-			uid: user.id,
-			name: user.name,
-			role: user.role,
-			token,
-		});
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({
-			ok: false,
-			msg: "Por favor hable con el administrador",
-		});
-	}
+    res.status(201).json({
+      ok: true,
+      msg: 'Inicio de sesión exitoso',
+      uid: user.id,
+      name: user.name,
+      role: user.role,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'Por favor hable con el administrador',
+    });
+  }
 };
 
 export const revalidateToken = async (req: Request, res: Response) => {
-	const { uid, name, role } = req.params;
+  const { uid, name, role } = req.params;
 
-	const token = await generateJWT(uid, name, role);
+  const token = await generateJWT(uid, name, role);
 
-	res.status(500).json({
-		ok: true,
-		msg: "Nuevo token",
-		uid,
-		name,
-		token,
-	});
+  res.status(500).json({
+    ok: true,
+    msg: 'Nuevo token',
+    uid,
+    name,
+    token,
+  });
+};
+
+export const passwordRecover = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const salt = bcrypt.genSaltSync();
+
+  const newPassword = bcrypt.hashSync(password, salt);
+
+  const userBd = await User.findOneAndUpdate({ email }, { password: newPassword }, { new: true });
+
+  if (userBd) {
+    res.status(200).json({
+      ok: true,
+      msg: 'Updated password',
+      result: {},
+    });
+  }
 };

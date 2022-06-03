@@ -15,11 +15,6 @@
 	justify-content: center;
 }
 
-.ant-upload.ant-upload-drag{
-	width: 80% !important;
-	margin: 20px !important;
-	}
-	.ant-upload-list.ant-upload-list-picture{
-	width: 100% !important;
-	margin: 20px !important;
-	}
+.ant-upload-list-text .ant-upload-span, .ant-upload-list-picture .ant-upload-span {
+	width: 350px
+}

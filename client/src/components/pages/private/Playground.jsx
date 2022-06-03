@@ -16,8 +16,6 @@ export const Playground = () => {
     const fetchData = async () => {
       const result = await dispatch(getImages());
 
-      console.log(result);
-
       const sortResult = result?.sort((a, b) =>
         a.image.toLowerCase() < b.image.toLowerCase() ? -1 : b.image.toLowerCase() > a.image.toLowerCase() ? 1 : 0
       );
