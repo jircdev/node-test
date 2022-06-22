@@ -1,0 +1,49 @@
+@import '../../../../../assets/css/partials/variables.scss';
+
+.--register-page__body {
+  //background-image: url('https://cdn.pixabay.com/photo/2017/12/11/20/06/spanner-3013135_960_720.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  filter: blur(2px);
+  position: static;
+}
+
+.--register-page__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  height: -moz-available; /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  height: stretch;
+}
+
+.--register-form__container {
+  background-color: $white;
+  border: 1px solid $primary;
+  border-radius: 5px;
+  padding: 24px;
+  width: 100%;
+  max-width: 275px;
+}
+
+.--register-form__title {
+  text-align: center;
+}
+
+.register-form__button {
+  width: 100%;
+  margin-right: 1em !important;
+}
+
+.--login-goto__text {
+  color: $primary;
+  display: block;
+  margin-top: 0.5em;
+  text-align: center;
+}
+
+.--login-goto__link {
+  margin-left: 12px !important;
+}

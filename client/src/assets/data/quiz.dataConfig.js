@@ -1,0 +1,40 @@
+export const columns = [
+  {
+    title: 'id',
+    dataIndex: 'id',
+    key: 'id',
+    aling: 'center',
+    width: 0,
+  },
+  {
+    title: 'Código',
+    dataIndex: 'code',
+    key: 'code',
+    aling: 'center',
+    width: 5,
+    render: (value) => <p style={{ marginBottom: 0, textAlign: 'center' }}>{value}</p>,
+  },
+  {
+    title: 'Titulo',
+    dataIndex: 'title',
+    key: 'title',
+    width: 20,
+    ellipsis: true,
+  },
+  {
+    title: 'Categoría',
+    dataIndex: 'category',
+    key: 'category',
+    aling: 'center',
+    width: 10,
+    render: (value) => <p style={{ marginBottom: 0, textAlign: 'center' }}>{value}</p>,
+  },
+  {
+    title: 'Preguntas',
+    dataIndex: 'questions',
+    key: 'questions',
+    aling: 'center',
+    width: 10,
+    render: (value) => <p style={{ marginBottom: 0, textAlign: 'center' }}>{value.length}</p>,
+  },
+];

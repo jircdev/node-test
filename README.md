@@ -1,8 +1,4 @@
-# Prueba NodeJS
+# baleares-app
 
-## Instrucciones generales
 
-1. Realizar fork del repositorio.
-2. ejecutar `npm i` en el directorio raiz.
-3. ejecutar `node index.js` en la raiz del proyecto
-4. Acceder a [http://localhost:3000](localhost:3000) para ver las actividades del ejercicio.
+baleares-app es el resultado de desarrollar un ejercicio basico node, como prueba tecnica para vacante Desarrollador NodeJs. Es una aplicacion para subir imagenes a un servidor.  Las imagenes deben ser guardadas en la carpeta del usuario. El Forontend realizado en ReactJs y Backen Node con Express
